@@ -47,10 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "sugar",
-   #  "extra_views",
-   #  "djmoney",
-   #  "autodo.apps.AutodoConfig",
+    "ragus.apps.RagusConfig",
 ]
 
 MIDDLEWARE = [
@@ -106,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# AUTH_USER_MODEL = "autodo.User"
+AUTH_USER_MODEL = "ragus.User"
 
 # Go to the home page after logging in rather than the account profile page
 LOGIN_REDIRECT_URL = "/"

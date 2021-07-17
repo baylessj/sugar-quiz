@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% block content %}
+
+<div class="w-full h-dashboard overflow-auto dark:bg-background_dark">
+   <div class="container mx-auto p-4 max-w-3xl">
+      <h1 class="text-center mx-auto text-3xl font-bold">Doors</h1>
+     {% if door_list|length < 1 %}
+     <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 text-center">
+       <p>No doors are available to unlock.</p>
+     </div>
+     {% endif %}
+ 
+     {% for door in door_list %}
+     <div class="bg-gray-50 dark:bg-background_med rounded-lg shadow-sm duration-100 px-2 py-4 my-4">
+       <div class="flex flex-wrap justify-between">
+           <div class="text-gray-900 dark:text-gray-200 text-lg font-semibold mx-2">
+             {{ door.name }}
+           </div>
+           <div class="flex">
+            <button
+               device-id="{{ door.acme_device_id }}"
+               class="
+                  {% if not door.locked %}hidden{% endif %}
+                  unlock-button
+                  bg-blue-500
+                  hover:bg-blue-400
+                  text-white
+                  font-bold
+                  py-2
+                  px-4
+                  rounded
+                  shadow-md">
+               Unlock
+            </button>
+            <div class="
+               {% if door.locked %}hidden{% endif %}
+               bg-gray-100 rounded-lg p-2 mx-2">
+               Unlocked 
+            </div>
+            <div class="">
+               <div class="
+                  {% if not door.locked %}hidden{% endif %}
+                  bg-gray-100 rounded-lg p-2 mx-2">
+                  Locked 
+               </div>
+               <button
+                  device-id="{{ door.acme_device_id }}"
+                  class="
+                     {% if door.locked %}hidden{% endif %}
+                     lock-button
+                     bg-blue-500
+                     hover:bg-blue-400
+                     text-white
+                     font-bold
+                     py-2
+                     px-4
+                     rounded
+                     shadow-md">
+                  Lock
+               </button>
+            </div>
+         </div>
+       </div>
+     </div>
+     <div class="h-36 w-full" />
+     {% endfor %}
+   </div>
+ </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+   if (window.addEventListener) { // Mozilla, Netscape, Firefox
+      window.addEventListener('load', handleLoad, false);
+   } else if (window.attachEvent) { // IE
+      window.attachEvent('onload', handleLoad);
+   }
+
+   function handleLoad(e) {
+      buttons = document.querySelectorAll(".lock-button");
+      for (var i = 0; i < buttons.length; i++) {
+         button = buttons[i];
+         button.addEventListener('click', handleClick);
+      }
+   }
+
+   function handleClick(e) {
+      button = e.target;
+      doorId = button.getAttribute("device-id");
+      axios.post(`/doors/lock/${doorId}/`).then(function (response) { 
+         // todo: update the locked/unlocked status
+      });
+
+      e.preventDefault();
+   }
+</script>
+
+{% endblock %}
