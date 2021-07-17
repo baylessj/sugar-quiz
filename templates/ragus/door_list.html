@@ -14,10 +14,22 @@
      {% for door in door_list %}
      <div class="bg-gray-50 dark:bg-background_med rounded-lg shadow-sm duration-100 px-2 py-4 my-4">
        <div class="flex flex-wrap justify-between">
+         <div class="flex">
            <div class="text-gray-900 dark:text-gray-200 text-lg font-semibold mx-2">
              {{ door.name }}
            </div>
-           <div class="flex">
+           <div class="
+               {% if door.locked %}hidden{% endif %}
+               bg-green-200 rounded-lg p-2 mx-2">
+               Unlocked 
+            </div>
+            <div class="
+               {% if not door.locked %}hidden{% endif %}
+               bg-red-200 rounded-lg p-2 mx-2">
+               Locked 
+            </div>
+         </div>
+         <div>
             <button
                device-id="{{ door.acme_device_id }}"
                class="
@@ -33,35 +45,23 @@
                   shadow-md">
                Unlock
             </button>
-            <div class="
-               {% if door.locked %}hidden{% endif %}
-               bg-gray-100 rounded-lg p-2 mx-2">
-               Unlocked 
-            </div>
-            <div class="">
-               <div class="
-                  {% if not door.locked %}hidden{% endif %}
-                  bg-gray-100 rounded-lg p-2 mx-2">
-                  Locked 
-               </div>
-               <button
-                  device-id="{{ door.acme_device_id }}"
-                  class="
-                     {% if door.locked %}hidden{% endif %}
-                     lock-button
-                     bg-blue-500
-                     hover:bg-blue-400
-                     text-white
-                     font-bold
-                     py-2
-                     px-4
-                     rounded
-                     shadow-md">
-                  Lock
-               </button>
-            </div>
+            <button
+               device-id="{{ door.acme_device_id }}"
+               class="
+                  {% if door.locked %}hidden{% endif %}
+                  lock-button
+                  bg-blue-500
+                  hover:bg-blue-400
+                  text-white
+                  font-bold
+                  py-2
+                  px-4
+                  rounded
+                  shadow-md">
+               Lock
+            </button>
          </div>
-       </div>
+       </div>         
      </div>
      <div class="h-36 w-full" />
      {% endfor %}
@@ -76,17 +76,33 @@
    }
 
    function handleLoad(e) {
-      buttons = document.querySelectorAll(".lock-button");
-      for (var i = 0; i < buttons.length; i++) {
-         button = buttons[i];
-         button.addEventListener('click', handleClick);
+      lockButtons = document.querySelectorAll(".lock-button");
+      for (var i = 0; i < lockButtons.length; i++) {
+         button = unlockButtons[i];
+         button.addEventListener('click', handleLockClick);
+      }
+
+      unlockButtons = document.querySelectorAll(".lock-button");
+      for (var i = 0; i < unlockButtons.length; i++) {
+         button = unlockButtons[i];
+         button.addEventListener('click', handleUnlockClick);
       }
    }
 
-   function handleClick(e) {
+   function handleLockClick(e) {
       button = e.target;
       doorId = button.getAttribute("device-id");
       axios.post(`/doors/lock/${doorId}/`).then(function (response) { 
+         // todo: update the locked/unlocked status
+      });
+
+      e.preventDefault();
+   }
+   
+   function handleUnlockClick(e) {
+      button = e.target;
+      doorId = button.getAttribute("device-id");
+      axios.post(`/doors/unlock/${doorId}/`).then(function (response) { 
          // todo: update the locked/unlocked status
       });
 

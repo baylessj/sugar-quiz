@@ -40,10 +40,28 @@ def lock_door(request, pk):
    """
    # Check that we can actually unlock the given door
    if not request.user.doors.filter(acme_device_id=pk).exists():
-      return JsonResponse({'error': 'You are not authorized to unlock this door'})
+      return JsonResponse({'error': 'You are not authorized to lock this door'})
 
    # Hit the api, ignoring the response for now
    # TODO: handle any error conditions from the API here
    response = requests.get(f"https://acme-locks-api.herokuapp.com/devices/{pk}/lock", headers=AUTH_HEADERS)
+
+   return JsonResponse({})
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def unlock_door(request, pk):
+   """Unlocks a Door, as long as it belongs to the requesting user.
+   
+   We hit this endpoint from the client instead of directly hitting the API endpoint to ensure
+   that we do not leak the API Auth token.
+   """
+   # Check that we can actually unlock the given door
+   if not request.user.doors.filter(acme_device_id=pk).exists():
+      return JsonResponse({'error': 'You are not authorized to unlock this door'})
+
+   # Hit the api, ignoring the response for now
+   # TODO: handle any error conditions from the API here
+   response = requests.get(f"https://acme-locks-api.herokuapp.com/devices/{pk}/unlock", headers=AUTH_HEADERS)
 
    return JsonResponse({})
