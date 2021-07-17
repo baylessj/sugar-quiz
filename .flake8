@@ -1,0 +1,9 @@
+[flake8]
+select = ANN,B,B9,BLK,C,D,DAR,E,F,I,S,W
+ignore = E203,E501,W503,B950,ANN101,D105
+# otherwise asserts in test files will error
+per-file-ignores = tests/*:S101,ANN
+max-complexity = 10
+max-line-length = 80
+application-import-names = sugar
+import-order-style = google

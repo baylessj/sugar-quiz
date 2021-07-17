@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#################################
+# Node files
+#################################
+node_modules/
+staticfiles/
+
+#################################
+# Other
+#################################
+quiz_files/api.txt
