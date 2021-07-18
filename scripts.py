@@ -1,6 +1,6 @@
 import subprocess
 
-locations = ["sugar",
+locations = ["ragus",
 #  "tests", 
 # "docs/conf.py"
 ]

@@ -5,5 +5,5 @@ ignore = E203,E501,W503,B950,ANN101,D105
 per-file-ignores = tests/*:S101,ANN
 max-complexity = 10
 max-line-length = 80
-application-import-names = sugar
+application-import-names = ragus
 import-order-style = google
