@@ -18,12 +18,16 @@
            <div class="text-gray-900 dark:text-gray-200 text-lg font-semibold mx-2">
              {{ door.name }}
            </div>
-           <div class="
+           <div
+               id="unlocked-sign-{{ door.acme_device_id }}" 
+               class="
                {% if door.locked %}hidden{% endif %}
                bg-green-200 rounded-lg p-2 mx-2">
                Unlocked 
             </div>
-            <div class="
+            <div 
+               id="locked-sign-{{ door.acme_device_id }}"
+               class="
                {% if not door.locked %}hidden{% endif %}
                bg-red-200 rounded-lg p-2 mx-2">
                Locked 
@@ -31,6 +35,7 @@
          </div>
          <div>
             <button
+               id="unlock-button-{{ door.acme_device_id }}"
                device-id="{{ door.acme_device_id }}"
                class="
                   {% if not door.locked %}hidden{% endif %}
@@ -46,6 +51,7 @@
                Unlock
             </button>
             <button
+               id="lock-button-{{ door.acme_device_id }}"
                device-id="{{ door.acme_device_id }}"
                class="
                   {% if door.locked %}hidden{% endif %}
@@ -67,7 +73,6 @@
      {% endfor %}
    </div>
  </div>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
    if (window.addEventListener) { // Mozilla, Netscape, Firefox
       window.addEventListener('load', handleLoad, false);
@@ -78,33 +83,45 @@
    function handleLoad(e) {
       lockButtons = document.querySelectorAll(".lock-button");
       for (var i = 0; i < lockButtons.length; i++) {
-         button = unlockButtons[i];
+         button = lockButtons[i];
          button.addEventListener('click', handleLockClick);
       }
 
-      unlockButtons = document.querySelectorAll(".lock-button");
+      unlockButtons = document.querySelectorAll(".unlock-button");
       for (var i = 0; i < unlockButtons.length; i++) {
          button = unlockButtons[i];
          button.addEventListener('click', handleUnlockClick);
       }
    }
 
-   function handleLockClick(e) {
+   handleLockClick = async (e) => {
       button = e.target;
       doorId = button.getAttribute("device-id");
-      axios.post(`/doors/lock/${doorId}/`).then(function (response) { 
-         // todo: update the locked/unlocked status
-      });
+      try {
+         const response = await fetch(`doors/lock/${doorId}/`, {method: 'POST', credentials: 'same-origin', body: {}});
+         document.getElementById(`unlocked-sign-${doorId}`).classList.add("hidden");
+         document.getElementById(`locked-sign-${doorId}`).classList.remove("hidden");
+         document.getElementById(`lock-button-${doorId}`).classList.add("hidden");
+         document.getElementById(`unlock-button-${doorId}`).classList.remove("hidden");
+      } catch (e) {
+         console.log(e);
+      }
 
       e.preventDefault();
    }
    
-   function handleUnlockClick(e) {
+   handleUnlockClick = async (e) => {
       button = e.target;
       doorId = button.getAttribute("device-id");
-      axios.post(`/doors/unlock/${doorId}/`).then(function (response) { 
-         // todo: update the locked/unlocked status
-      });
+      try {
+         const response = await fetch(`doors/unlock/${doorId}/`, {method: 'POST', credentials: 'same-origin', body: {}});
+         document.getElementById(`locked-sign-${doorId}`).classList.add("hidden");
+         document.getElementById(`unlocked-sign-${doorId}`).classList.remove("hidden");
+         document.getElementById(`unlock-button-${doorId}`).classList.add("hidden");
+         document.getElementById(`lock-button-${doorId}`).classList.remove("hidden");
+      } catch (e) {
+         console.log(e);
+      }
 
       e.preventDefault();
    }

@@ -10,7 +10,7 @@ import requests
 
 from ragus.models import Door
 
-AUTH_HEADERS = {"Authorization": f"Bearer {os.environ.get('API_TOKEN', '')}"}
+AUTH_HEADERS = {"Authorization": f"Bearer {os.environ['AUTH_TOKEN']}"}
 
 def index(request):
    if request.user.is_authenticated:
