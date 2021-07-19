@@ -52,10 +52,11 @@ def lock_door(request: HttpRequest, pk: str) -> JsonResponse:
         return JsonResponse({"error": "You are not authorized to lock this door"})
 
     # Hit the api, ignoring the response for now
-    # TODO: handle any error conditions from the API here
     response = requests.get(
         f"https://acme-locks-api.herokuapp.com/devices/{pk}/lock", headers=AUTH_HEADERS
     )
+    if not response.status_code == 200:
+        return JsonResponse({"error": "Unable to unlock door."})
 
     return JsonResponse({})
 
@@ -70,13 +71,14 @@ def unlock_door(request: HttpRequest, pk: str) -> JsonResponse:
     """
     # Check that we can actually unlock the given door
     if not request.user.doors.filter(acme_device_id=pk).exists():
-        return JsonResponse({"error": "You are not authorized to unlock this door"})
+        return JsonResponse({"error": "You are not authorized to unlock this door."})
 
     # Hit the api, ignoring the response for now
-    # TODO: handle any error conditions from the API here
     response = requests.get(
         f"https://acme-locks-api.herokuapp.com/devices/{pk}/unlock",
         headers=AUTH_HEADERS,
     )
+    if not response.status_code == 200:
+        return JsonResponse({"error": "Unable to unlock door."})
 
     return JsonResponse({})

@@ -10,6 +10,8 @@
        <p>No doors are available to unlock.</p>
      </div>
      {% endif %}
+
+     <p id="error-msg" class="hidden text-center mx-auto text-red-500"></p>
  
      {% for door in door_list %}
      <div class="bg-gray-50 dark:bg-background_med rounded-lg shadow-sm duration-100 px-2 py-4 my-4">
@@ -111,10 +113,17 @@
       doorId = button.getAttribute("device-id");
       try {
          const response = await fetch(`doors/lock/${doorId}/`, {method: 'POST', credentials: 'same-origin', body: {}});
-         document.getElementById(`unlocked-sign-${doorId}`).classList.add("hidden");
-         document.getElementById(`locked-sign-${doorId}`).classList.remove("hidden");
-         document.getElementById(`lock-button-${doorId}`).classList.add("hidden");
-         document.getElementById(`unlock-button-${doorId}`).classList.remove("hidden");
+         const json = await response.json();
+         if (json.error) {
+            document.getElementById("error-msg").classList.remove("hidden");
+            document.getElementById("error-msg").innerText = json.error;
+         } else {
+            document.getElementById("error-msg").classList.add("hidden");
+            document.getElementById(`unlocked-sign-${doorId}`).classList.add("hidden");
+            document.getElementById(`locked-sign-${doorId}`).classList.remove("hidden");
+            document.getElementById(`lock-button-${doorId}`).classList.add("hidden");
+            document.getElementById(`unlock-button-${doorId}`).classList.remove("hidden");
+         }
       } catch (e) {
          console.log(e);
       }
@@ -127,10 +136,17 @@
       doorId = button.getAttribute("device-id");
       try {
          const response = await fetch(`doors/unlock/${doorId}/`, {method: 'POST', credentials: 'same-origin', body: {}});
-         document.getElementById(`locked-sign-${doorId}`).classList.add("hidden");
-         document.getElementById(`unlocked-sign-${doorId}`).classList.remove("hidden");
-         document.getElementById(`unlock-button-${doorId}`).classList.add("hidden");
-         document.getElementById(`lock-button-${doorId}`).classList.remove("hidden");
+         const json = await response.json();
+         if (json.error) {
+            document.getElementById("error-msg").classList.remove("hidden");
+            document.getElementById("error-msg").innerText = json.error;
+         } else {
+            document.getElementById("error-msg").classList.add("hidden");
+            document.getElementById(`locked-sign-${doorId}`).classList.add("hidden");
+            document.getElementById(`unlocked-sign-${doorId}`).classList.remove("hidden");
+            document.getElementById(`unlock-button-${doorId}`).classList.add("hidden");
+            document.getElementById(`lock-button-${doorId}`).classList.remove("hidden");
+         }
       } catch (e) {
          console.log(e);
       }
