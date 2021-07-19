@@ -59,6 +59,12 @@ user: root
 pass: user + 1234
 ```
 
+Testing:
+
+```
+poetry run test
+```
+
 You can also run the following commands to ensure code quality:
 
 ```
