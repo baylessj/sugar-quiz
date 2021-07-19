@@ -2,6 +2,11 @@
 
 @tailwind components;
 
+@font-face {
+   font-family: 'Lato';
+   src: local('Lato'), url(./Lato/Lato-Regular.ttf) format('ttf');
+}
+
 @tailwind utilities;
 
 @layer utilities {

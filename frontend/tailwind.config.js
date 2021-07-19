@@ -63,7 +63,7 @@ let gradients = {
        },
      },
      fontFamily: {
-       sans: ["Ubuntu", "ui-sans-serif"],
+       "sans": ["Lato", "sans-serif"],
      },
    },
    variants: {
