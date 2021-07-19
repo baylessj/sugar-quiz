@@ -49,7 +49,7 @@ def lock_door(request: HttpRequest, pk: str) -> JsonResponse:
     """
     # Check that we can actually unlock the given door
     if not request.user.doors.filter(acme_device_id=pk).exists():
-        return JsonResponse({"error": "You are not authorized to lock this door"})
+        return JsonResponse({"error": "You are not authorized to lock this door."})
 
     # Hit the api, ignoring the response for now
     response = requests.get(

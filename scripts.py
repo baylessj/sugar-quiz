@@ -15,4 +15,4 @@ def format():
 #     subprocess.run(["sphinx-build", "docs", "docs/_build"])
 
 def test():
-    subprocess.run(["pytest", "--cov", "-s", "-vvv", "--ignore=docs"])
+    subprocess.run(["python", "manage.py", "test"])
