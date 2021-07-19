@@ -12,8 +12,8 @@ You can access Ragus at https://sugar-quiz.herokuapp.com. You will need to log i
 
 You can log in as any one of the residents with the following credentials:
 
-username: Resident email (e.g. annettemoore@dyer-summers.com)
-password: Resident First Name + Last Name (e.g. AdamTaylor)
+- username: Resident email (e.g. annettemoore@dyer-summers.com)
+- password: Resident First Name + Last Name (e.g. AdamTaylor)
 
 ## Dev Installation
 
