@@ -1,8 +1,7 @@
 # sugar-quiz
 
-<!-- ![Ragus Screenshot](./ragus.png) -->
 <p align="center">
-<img src="./ragus.png" />
+<img src="./ragus.PNG" />
 </p>
 
 **Ragus** is an app for locking and unlocking apartment doors.
