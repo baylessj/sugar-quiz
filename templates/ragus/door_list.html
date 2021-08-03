@@ -1,45 +1,38 @@
 {% extends 'base.html' %}
-{% load static %} 
+{% load static %}
 {% block content %}
 
-<div class="w-full h-dashboard overflow-auto dark:bg-background_dark">
+<div class="w-full h-screen overflow-auto dark:bg-background_dark">
    <div class="container mx-auto p-4 max-w-3xl">
       <h1 class="text-center mx-auto text-3xl font-bold">Doors</h1>
-     {% if door_list|length < 1 %}
-     <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 text-center">
-       <p>No doors are available to unlock.</p>
-     </div>
-     {% endif %}
+      {% if door_list|length < 1 %}
+      <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 text-center">
+         <p>No doors are available to unlock.</p>
+      </div>
+      {% endif %}
 
-     <p id="error-msg" class="hidden text-center mx-auto text-red-500"></p>
- 
-     {% for door in door_list %}
-     <div class="bg-gray-50 dark:bg-background_med rounded-lg shadow-sm duration-100 px-2 py-4 my-4">
-       <div class="flex flex-wrap justify-between">
-         <div class="flex">
-           <div class="text-gray-900 dark:text-gray-200 text-lg font-semibold mx-2">
-             {{ door.name }}
-           </div>
-           <div
-               id="unlocked-sign-{{ door.acme_device_id }}" 
-               class="
+      <p id="error-msg" class="hidden text-center mx-auto text-red-500"></p>
+
+      {% for door in door_list %}
+      <div class="bg-gray-50 dark:bg-background_med rounded-lg shadow-sm duration-100 px-2 py-4 my-4">
+         <div class="flex flex-wrap justify-between">
+            <div class="flex">
+               <div class="text-gray-900 dark:text-gray-200 text-lg font-semibold mx-2">
+                  {{ door.name }}
+               </div>
+               <div id="unlocked-sign-{{ door.acme_device_id }}" class="
                {% if door.locked %}hidden{% endif %}
                bg-green-200 rounded-lg p-2 mx-2">
-               Unlocked 
-            </div>
-            <div 
-               id="locked-sign-{{ door.acme_device_id }}"
-               class="
+                  Unlocked
+               </div>
+               <div id="locked-sign-{{ door.acme_device_id }}" class="
                {% if not door.locked %}hidden{% endif %}
                bg-red-200 rounded-lg p-2 mx-2">
-               Locked 
+                  Locked
+               </div>
             </div>
-         </div>
-         <div>
-            <button
-               id="unlock-button-{{ door.acme_device_id }}"
-               device-id="{{ door.acme_device_id }}"
-               class="
+            <div>
+               <button id="unlock-button-{{ door.acme_device_id }}" device-id="{{ door.acme_device_id }}" class="
                   {% if not door.locked %}hidden{% endif %}
                   unlock-button
                   bg-blue-500
@@ -50,12 +43,9 @@
                   px-4
                   rounded
                   shadow-md">
-               Unlock
-            </button>
-            <button
-               id="lock-button-{{ door.acme_device_id }}"
-               device-id="{{ door.acme_device_id }}"
-               class="
+                  Unlock
+               </button>
+               <button id="lock-button-{{ door.acme_device_id }}" device-id="{{ door.acme_device_id }}" class="
                   {% if door.locked %}hidden{% endif %}
                   lock-button
                   bg-blue-500
@@ -66,15 +56,15 @@
                   px-4
                   rounded
                   shadow-md">
-               Lock
-            </button>
+                  Lock
+               </button>
+            </div>
          </div>
-       </div>         
-     </div>
-     <div class="h-36 w-full" />
-     {% endfor %}
-     <div class="container mx-auto my-8 w-full flex justify-center">
-      <a href="{% url 'logout' %}" class="
+      </div>
+      <div class="h-36 w-full" />
+      {% endfor %}
+      <div class="container mx-auto my-8 w-full flex justify-center">
+         <a href="{% url 'logout' %}" class="
          bg-blue-500
          hover:bg-blue-400
          text-white
@@ -83,10 +73,10 @@
          px-4
          rounded
          shadow-md">Log Out</a>
-     </div>
-     
+      </div>
+
    </div>
- </div>
+</div>
 <script type="text/javascript">
    if (window.addEventListener) { // Mozilla, Netscape, Firefox
       window.addEventListener('load', handleLoad, false);
@@ -112,7 +102,7 @@
       button = e.target;
       doorId = button.getAttribute("device-id");
       try {
-         const response = await fetch(`doors/lock/${doorId}/`, {method: 'POST', credentials: 'same-origin', body: {}});
+         const response = await fetch(`doors/lock/${doorId}/`, { method: 'POST', credentials: 'same-origin', body: {} });
          const json = await response.json();
          if (json.error) {
             document.getElementById("error-msg").classList.remove("hidden");
@@ -130,12 +120,12 @@
 
       e.preventDefault();
    }
-   
+
    handleUnlockClick = async (e) => {
       button = e.target;
       doorId = button.getAttribute("device-id");
       try {
-         const response = await fetch(`doors/unlock/${doorId}/`, {method: 'POST', credentials: 'same-origin', body: {}});
+         const response = await fetch(`doors/unlock/${doorId}/`, { method: 'POST', credentials: 'same-origin', body: {} });
          const json = await response.json();
          if (json.error) {
             document.getElementById("error-msg").classList.remove("hidden");

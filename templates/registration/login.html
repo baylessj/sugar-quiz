@@ -1,7 +1,6 @@
 {% extends "base.html" %} {% block content %}
 
-<div
-  class="
+<div class="
     min-h-screen
     flex
     justify-center
@@ -11,22 +10,19 @@
     px-4
     sm:px-6
     lg:px-8
-  "
->
+  ">
   <div class="max-w-md w-full space-y-8">
     <div>
-       <h1 class="mt-6 text-center text-4xl font-extrabold">Ragus</h1>
+      <h1 class="mt-6 text-center text-4xl font-extrabold">Ragus</h1>
     </div>
     <div>
-      <h2
-        class="
+      <h2 class="
           mt-6
           text-center text-3xl
           font-extrabold
           text-gray-900
           dark:text-gray-200
-        "
-      >
+        ">
         Sign in to your account
       </h2>
       {% if form.errors %}
@@ -40,11 +36,8 @@
       <input type="hidden" name="remember" value="true" />
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
-          <label for="{{ form.username.id_for_label }}" class="sr-only"
-            >Email address</label
-          >
-          <input
-            class="
+          <label for="{{ form.username.id_for_label }}" class="sr-only">Email address</label>
+          <input class="
               appearance-none
               rounded-none
               relative
@@ -64,25 +57,13 @@
               focus:border-autodo
               focus:z-10
               sm:text-sm
-            "
-            id="{{ form.username.id_for_label }}"
-            maxlength="150"
-            name="{{ form.username.html_name }}"
-            placeholder="Email address"
-            type="text"
-          />
+            " id="{{ form.username.id_for_label }}" maxlength="150" name="{{ form.username.html_name }}"
+            placeholder="Email address" type="text" />
         </div>
         <div>
-          <label for="{{ form.password.id_for_label }}" class="sr-only"
-            >Password</label
-          >
-          <input
-            id="{{ form.password.id_for_label }}"
-            name="{{ form.password.html_name }}"
-            type="password"
-            autocomplete="current-password"
-            required
-            class="
+          <label for="{{ form.password.id_for_label }}" class="sr-only">Password</label>
+          <input id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" type="password"
+            autocomplete="current-password" required class="
               appearance-none
               rounded-none
               relative
@@ -102,16 +83,12 @@
               focus:border-autodo
               focus:z-10
               sm:text-sm
-            "
-            placeholder="Password"
-          />
+            " placeholder="Password" />
         </div>
       </div>
 
       <div>
-        <button
-          type="submit"
-          class="
+        <button type="submit" class="
             group
             relative
             w-full
@@ -128,8 +105,7 @@
             hover:bg-blue-500
             focus:outline-none
             focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-          "
-        >
+          ">
           Sign in
         </button>
       </div>

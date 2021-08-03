@@ -24,7 +24,7 @@ You will need the following tools:
 - [Node.js](https://nodejs.org/en/)
 - [Python >3.8](https://www.python.org/)
 - [Poetry](https://python-poetry.org/)
-- [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) 
+- [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 
 When these tools are installed, run the following commands in this directory:
 
@@ -32,7 +32,18 @@ When these tools are installed, run the following commands in this directory:
 npm install
 poetry install
 npm run build
+python manage.py migrate
 ```
+
++++
+To create the users and doors, run the following commands in the Django management shell
+
+```
+exec(open("./quiz_files/createdoors.py").read())
+exec(open("./quiz_files/createusers.py").read())
+```
+
+You will need to set the AUTH_TOKEN environment variable. This is stored in the Heroku app's config or in the quiz docs.
 
 ### Running
 
@@ -43,7 +54,7 @@ poetry shell
 heroku local -f Procfile.windows
 ```
 
-*nix:
+\*nix:
 
 ```
 poetry shell
